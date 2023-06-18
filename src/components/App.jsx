@@ -15,6 +15,22 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts =
+      JSON.parse(localStorage.getItem('contacts')) || this.state.contacts;
+    this.setState({ contacts });
+    console.log(contacts);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.contacts.length !== 0 &&
+      prevState.contacts.length !== this.state.contacts.length
+    ) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   handleFilterChange = e => {
     this.setState({ filter: e.target.value });
   };
