@@ -16,10 +16,12 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    const contacts =
-      JSON.parse(localStorage.getItem('contacts')) || this.state.contacts;
-    this.setState({ contacts });
-    console.log(contacts);
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (contacts) {
+      this.setState({ contacts });
+    } else {
+      this.setState({ contacts: this.state.contacts });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -45,8 +47,8 @@ export class App extends Component {
     }
     const newContact = {
       id: nanoid(),
-      name: name,
-      number: number,
+      name,
+      number,
     };
 
     this.setState(prevState => ({
